@@ -1060,7 +1060,7 @@ void ImGui_ImplVulkan_NewFrame()
 {
     ImGui_ImplVulkan_Data* bd = ImGui_ImplVulkan_GetBackendData();
     ImGui_ImplVulkan_InitInfo* v = &bd->VulkanInitInfo;
-    vkResetDescriptorPool(v->Device, v->DescriptorPools[Renderer::GetConfig().FrameIndex], 0);
+    vkResetDescriptorPool(v->Device, v->DescriptorPools[Renderer::GetFrameIndex()], 0);
     IM_ASSERT(bd != nullptr && "Did you call ImGui_ImplVulkan_Init()?");
     IM_UNUSED(bd);
 }
@@ -1127,7 +1127,7 @@ VkDescriptorSet ImGui_ImplVulkan_AddTextureCustom(VkSampler sampler, VkImageView
     {
         VkDescriptorSetAllocateInfo alloc_info = {};
         alloc_info.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
-        alloc_info.descriptorPool = v->DescriptorPools[Renderer::GetConfig().FrameIndex];
+        alloc_info.descriptorPool = v->DescriptorPools[Renderer::GetFrameIndex()];
         alloc_info.descriptorSetCount = 1;
         alloc_info.pSetLayouts = &bd->DescriptorSetLayout;
         VkResult err = vkAllocateDescriptorSets(v->Device, &alloc_info, &descriptor_set);
